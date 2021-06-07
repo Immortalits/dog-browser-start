@@ -34,7 +34,11 @@ class SearchImage extends ContentComponent {
   // a data változó objecteket tartalmazó tömb
   displayImage(data) {
     this.clearErrors();
-    this.clearContent();
+
+
+    // this.clearContent();
+
+
     const image = document.createElement('img');
     // a data.message tömbből egy véletlenszerű elemet kiválasztunk
     image.src = data.message[Math.floor(Math.random() * data.message.length)];
@@ -48,9 +52,19 @@ class SearchImage extends ContentComponent {
     <form class="dog-search">
       <span class="search-icon"></span>
       <input type="text" id="dogSearchInput">
+
+
+
+      
+      
       <button>Search</button>
     </form>
     `;
+
+
+    // <input type="text" id="imageNumberInput" placeholder="1">
+
+
     document.querySelector('#header').insertAdjacentHTML('beforeend', markup);
     // az arrow functionnek nincs saját 'this' kulcsszava, tehát az arrow function-ön belül a 'this' ugyan azt fogja jelenteni, mint azon kívül (a classt, amiben vagyunk)
     document.querySelector('.dog-search button').addEventListener('click', (event) => {
@@ -59,6 +73,19 @@ class SearchImage extends ContentComponent {
       // mivel a getImages egy async MediaStreamAudioDestinationNode, ezért ez is promissal tér vissza
       // emiatt a promise object-en elérhető a 'then()' metódus
       // a then metódus bemeneti paramétere egy callback function, ami akkor fut length, amikor a promise beteljesül
+
+
+      // this.clearContent();
+
+      // if (count.render === isNaN) {
+      //   count.render = 1;
+      // } else {
+      //   for (let i = 0; i < count.render.length; i++) {
+      //     this.displayImage(data);
+      //   }
+      // }
+
+
       this.getImages(searchTerm).then((result) => {
         if (result)
           // ha csak egy dolgot csinálunk az 'if'-BeforeUnloadEvent, akkor a kódblokk ('{}') elhagyható
