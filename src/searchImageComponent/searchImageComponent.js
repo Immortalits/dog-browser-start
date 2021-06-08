@@ -54,7 +54,7 @@ class SearchImage extends ContentComponent {
       <input type="text" id="dogSearchInput">
 
 
-
+   <input type="text" id="imageNumberInput" placeholder="1">
       
       
       <button>Search</button>
@@ -70,25 +70,28 @@ class SearchImage extends ContentComponent {
     document.querySelector('.dog-search button').addEventListener('click', (event) => {
       event.preventDefault();
       const searchTerm = document.querySelector('#dogSearchInput').value;
-      // mivel a getImages egy async MediaStreamAudioDestinationNode, ezért ez is promissal tér vissza
+
+      let count = parseInt(document.querySelector('#imageNumberInput').value);
+
+      // mivel a getImages egy async, ezért ez is promissal tér vissza
       // emiatt a promise object-en elérhető a 'then()' metódus
-      // a then metódus bemeneti paramétere egy callback function, ami akkor fut length, amikor a promise beteljesül
+      // a then metódus bemeneti paramétere egy callback function, ami akkor fut le, amikor a promise beteljesül
 
 
-      // this.clearContent();
+      this.clearContent();
 
-      // if (count.render === isNaN) {
-      //   count.render = 1;
-      // } else {
-      //   for (let i = 0; i < count.render.length; i++) {
-      //     this.displayImage(data);
-      //   }
-      // }
+      if (isNaN(count.render)) {
+        count.render = 1;
+      } else {
+        for (let i = 1; i <= count.length; i++) {
+          this.displayImage(data);
+        }
+      }
 
 
       this.getImages(searchTerm).then((result) => {
         if (result)
-          // ha csak egy dolgot csinálunk az 'if'-BeforeUnloadEvent, akkor a kódblokk ('{}') elhagyható
+          // ha csak egy dolgot csinálunk az 'if'-ben, akkor a kódblokk ('{}') elhagyható
           this.displayImage(result);
       });
     });
