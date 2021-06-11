@@ -80,10 +80,10 @@ class SearchImage extends ContentComponent {
 
       this.clearContent();
 
-      if (isNaN(count.render)) {
-        count.render = 1;
+      if (isNaN(count)) {
+        count = 1;
       } else {
-        for (let i = 1; i <= count.length; i++) {
+        for (let i = 1; i <= count; i++) {
           this.displayImage(data);
         }
       }
