@@ -54,16 +54,12 @@ class ListBreeds extends ContentComponent {
     // a button html-nek van 'onclick' attribútuma
     button.onclick = () => {
       this.clearContent();
-
       if (localStorage.getItem('dogBreeds') === null) {
-        this.getFullList().then(results => {
-          results && this.displayList(results); localStorage.setItem('dogBreeds', JSON.stringify(results));
-        });
+        this.getFullList().then(results => { results && this.displayList(results); localStorage.setItem('dogBreeds', JSON.stringify(results)); });
       } else {
         this.displayList(JSON.parse(localStorage.getItem('dogBreeds')));
         console.log('in localStorage');
       }
-
 
     };
     document.querySelector('#header').appendChild(button);

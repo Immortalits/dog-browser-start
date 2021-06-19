@@ -11,38 +11,7 @@ class SearchImage extends ContentComponent {
   }
 
   // ez a metódus letölti az adatot az API-ról
-  async getImages(dogbreed) {
-
-    if (!dogbreed) {
-      this.displayError('Nem lett beírva semmi a keresőbe, nem tudunk keresni!');
-      // megállítjuk a getImages függvény futását a returnnel
-      return;
-    }
-
-    let urlString = '';
-    dogbreed = dogbreed.split(' ');
-    // a dogbreed változó innentől egy tömb
-    if (dogbreed.length === 1) {
-      urlString = `https://dog.ceo/api/breed/${dogbreed[0].toLowerCase()}/images`;
-    } else if (dogbreed.length === 2) {
-      urlString = `https://dog.ceo/api/breed/${dogbreed[1].toLowerCase()}/${dogbreed[0].toLowerCase()}/images`;
-    }
-    const response = await fetch(urlString);
-    const data = await response.json();
-    return data;
-  }
-
-
   // a data változó objecteket tartalmazó tömb
-  displayImage(data) {
-    this.clearErrors();
-    // this.clearContent();
-    const image = document.createElement('img');
-    // a data.message tömbből egy véletlenszerű elemet kiválasztunk
-    image.src = data.message[Math.floor(Math.random() * data.message.length)];
-    document.querySelector('#content').appendChild(image);
-    console.log(data);
-  }
 
   // megjeleníti a keresőt:
   render() {
@@ -61,26 +30,13 @@ class SearchImage extends ContentComponent {
       event.preventDefault();
       const searchTerm = document.querySelector('#dogSearchInput').value;
 
-      let count = parseInt(document.querySelector('#imageNumberInput').value);
       // mivel a getImages egy async, ezért ez is promissal tér vissza
       // emiatt a promise object-en elérhető a 'then()' metódus
       // a then metódus bemeneti paramétere egy callback function, ami akkor fut le, amikor a promise beteljesül
-      this.clearContent();
 
-      if (isNaN(count)) {
-        count = 1;
-      }
-
-      this.getImages(searchTerm).then((result) => {
-        if (result)
-          // ha csak egy dolgot csinálunk az 'if'-ben, akkor a kódblokk ('{}') elhagyható
-          for (let i = 0; i < count; i++) {
-            this.displayImage(result);
-          }
-      });
+      this.handleContentDisplay(searchTerm);
     });
   }
-
 }
 
 export default SearchImage;
