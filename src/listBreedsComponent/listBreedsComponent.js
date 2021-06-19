@@ -1,11 +1,14 @@
 import '../css/listBreedsComponent.css';
 import ContentComponent from '../contentComponent/contentComponent.js';
+import { Result } from 'postcss';
+import SearchImage from '../searchImageComponent/searchImageComponent.js';
 
 class ListBreeds extends ContentComponent {
   constructor() {
     super();
     this.render();
   }
+
 
   async getFullList() {
     const response = await fetch('https://dog.ceo/api/breeds/list/all');
@@ -21,6 +24,9 @@ class ListBreeds extends ContentComponent {
     const item = document.createElement('div');
     item.classList.add('breed-list-item');
     item.innerHTML = title;
+    item.addEventListener('click', () => {
+      this.handleContentDisplay(title);
+    });
     document.querySelector('#content').appendChild(item);
   }
 
@@ -48,8 +54,17 @@ class ListBreeds extends ContentComponent {
     // a button html-nek van 'onclick' attribútuma
     button.onclick = () => {
       this.clearContent();
-      // short circuit evaluation -> csak akkor fut le a displayList(results), ha nem undefined a results
-      this.getFullList().then(results => { results && this.displayList(results); });
+
+      if (localStorage.getItem('dogBreeds') === null) {
+        this.getFullList().then(results => {
+          results && this.displayList(results); localStorage.setItem('dogBreeds', JSON.stringify(results));
+        });
+      } else {
+        this.displayList(JSON.parse(localStorage.getItem('dogBreeds')));
+        console.log('in localStorage');
+      }
+
+
     };
     document.querySelector('#header').appendChild(button);
   }
