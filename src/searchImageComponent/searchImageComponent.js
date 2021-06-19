@@ -31,14 +31,12 @@ class SearchImage extends ContentComponent {
     const data = await response.json();
     return data;
   }
+
+
   // a data változó objecteket tartalmazó tömb
   displayImage(data) {
     this.clearErrors();
-
-
     // this.clearContent();
-
-
     const image = document.createElement('img');
     // a data.message tömbből egy véletlenszerű elemet kiválasztunk
     image.src = data.message[Math.floor(Math.random() * data.message.length)];
@@ -52,18 +50,10 @@ class SearchImage extends ContentComponent {
     <form class="dog-search">
       <span class="search-icon"></span>
       <input type="text" id="dogSearchInput">
-
-
-   <input type="text" id="imageNumberInput" placeholder="1">
-      
-      
+      <input type="text" id="imageNumberInput" placeholder="1">      
       <button>Search</button>
     </form>
     `;
-
-
-    // <input type="text" id="imageNumberInput" placeholder="1">
-
 
     document.querySelector('#header').insertAdjacentHTML('beforeend', markup);
     // az arrow functionnek nincs saját 'this' kulcsszava, tehát az arrow function-ön belül a 'this' ugyan azt fogja jelenteni, mint azon kívül (a classt, amiben vagyunk)
@@ -72,30 +62,25 @@ class SearchImage extends ContentComponent {
       const searchTerm = document.querySelector('#dogSearchInput').value;
 
       let count = parseInt(document.querySelector('#imageNumberInput').value);
-
       // mivel a getImages egy async, ezért ez is promissal tér vissza
       // emiatt a promise object-en elérhető a 'then()' metódus
       // a then metódus bemeneti paramétere egy callback function, ami akkor fut le, amikor a promise beteljesül
-
-
       this.clearContent();
 
       if (isNaN(count)) {
         count = 1;
-      } else {
-        for (let i = 1; i <= count; i++) {
-          this.displayImage(data);
-        }
       }
-
 
       this.getImages(searchTerm).then((result) => {
         if (result)
           // ha csak egy dolgot csinálunk az 'if'-ben, akkor a kódblokk ('{}') elhagyható
-          this.displayImage(result);
+          for (let i = 0; i < count; i++) {
+            this.displayImage(result);
+          }
       });
     });
   }
+
 }
 
 export default SearchImage;
