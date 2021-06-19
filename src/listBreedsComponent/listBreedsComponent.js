@@ -9,7 +9,6 @@ class ListBreeds extends ContentComponent {
     this.render();
   }
 
-
   async getFullList() {
     const response = await fetch('https://dog.ceo/api/breeds/list/all');
     if (response.status === 404) {

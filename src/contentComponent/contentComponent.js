@@ -49,11 +49,7 @@ export default class ContentComponent {
 
   displayImage(data) {
     this.clearErrors();
-
-
     // this.clearContent();
-
-
     const image = document.createElement('img');
     image.classList.add('lazy');
     // a data.message tömbből egy véletlenszerű elemet kiválasztunk
@@ -75,14 +71,11 @@ export default class ContentComponent {
   handleContentDisplay(searchTerm) {
 
     let count = parseInt(document.querySelector('#imageNumberInput').value);
-
     if (isNaN(count)) {
       count = 1;
     }
 
     this.clearContent();
-
-
     this.getImages(searchTerm).then((result) => {
       if (result)
         // ha csak egy dolgot csinálunk az 'if'-ben, akkor a kódblokk ('{}') elhagyható
